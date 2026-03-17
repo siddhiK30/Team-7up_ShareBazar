@@ -5,6 +5,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(),
+    tailwindcss()
   ],
+
+  // 🔥 FIX (correct position)
+  define: {
+    global: 'window',
+  }
 })
