@@ -24,11 +24,24 @@ const Navbar = () => {
             <Link to="/" className="text-gray-600 hover:text-emerald-500 font-medium transition">Stocks</Link>
             <Link to="/" className="text-gray-600 hover:text-emerald-500 font-medium transition">Mutual Funds</Link>
             <div className="h-6 w-px bg-gray-300"></div>
-            <Link to="/auth" className="text-gray-900 font-semibold hover:text-emerald-500 transition">Log in</Link>
-            <Link to="/auth" state={{ isRegister: true }} className="bg-emerald-500 text-white px-6 py-2.5 rounded-md font-bold hover:bg-emerald-600 transition shadow-sm">
+
+            {/* ✅ FIXED */}
+            <Link to="/auth" state={{ isRegister: false }} className="text-gray-900 font-semibold hover:text-emerald-500 transition">
+              Log in
+            </Link>
+
+            <Link 
+              to="/auth" 
+              state={{ isRegister: true }} 
+              className="bg-emerald-500 text-white px-6 py-2.5 rounded-md font-bold hover:bg-emerald-600 transition shadow-sm"
+            >
               Register / Sign Up
             </Link>
-              <Link to="/admin" className="text-gray-900 font-semibold hover:text-emerald-500 transition">Admin Login</Link>
+
+            <Link to="/admin" className="text-gray-900 font-semibold hover:text-emerald-500 transition">
+              Admin Login
+            </Link>
+            <Link to="/market">Live Market</Link>
           </div>
         </div>
       </div>
