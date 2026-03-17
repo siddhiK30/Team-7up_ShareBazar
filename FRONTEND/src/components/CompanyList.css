@@ -1,0 +1,71 @@
+/* src/components/CompanyList.css */
+
+.cl-wrapper {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+.cl-table-header {
+  display: flex;
+  padding: 14px 24px;
+  background: #fafbfc;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.cl-col-name { flex: 2; }
+.cl-col-code { flex: 1; }
+.cl-col-stocks { flex: 1; text-align: right; }
+
+.cl-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.cl-list::-webkit-scrollbar { width: 6px; }
+.cl-list::-webkit-scrollbar-track { background: #f5f5f5; }
+.cl-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+
+.cl-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+.cl-empty-icon { font-size: 48px; margin-bottom: 12px; }
+.cl-empty h3 { font-size: 18px; color: #1a1a2e; margin-bottom: 6px; }
+.cl-empty p { color: #aaa; font-size: 14px; }
+
+.cl-loading {
+  text-align: center;
+  padding: 50px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+.cl-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e8e8e8;
+  border-top: 3px solid #00b386;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 14px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.cl-loading p { color: #aaa; font-size: 14px; }
+
+@media (max-width: 700px) {
+  .cl-table-header { display: none; }
+}

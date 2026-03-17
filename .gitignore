@@ -1,0 +1,6 @@
+.metadata/
+*.log
+*.class
+target/
+node_modules/
+.env
