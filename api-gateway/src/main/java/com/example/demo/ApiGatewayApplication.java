@@ -31,14 +31,12 @@ public RouteLocator customRoutes(RouteLocatorBuilder builder) {
                     .uri("http://localhost:8081")
             )
 
-            // 🏢 Company Service Route
-            .route("company_service", r -> r
-                    .path("/companies/**")
-                    .and()
-                    .method(HttpMethod.GET, HttpMethod.POST)
-                    .uri("http://localhost:8082") // or 8082 if separate service
-            )
-
+          .route("company_service", r -> r
+        .path("/companies/**")
+        .and()
+        .method(HttpMethod.GET, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PATCH)
+        .uri("http://localhost:8082")
+)
             .build(); // ✅ ONLY ONE build()
 }
 }

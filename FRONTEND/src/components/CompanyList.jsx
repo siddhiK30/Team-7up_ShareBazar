@@ -4,7 +4,7 @@ import React from "react";
 import CompanyCard from "./CompanyCard";
 import "./CompanyList.css";
 
-const CompanyList = ({ companies, loading }) => {
+const CompanyList = ({ companies, loading, onDelete, onUpdate }) => {
   if (loading) {
     return (
       <div className="cl-loading">
@@ -31,7 +31,8 @@ const CompanyList = ({ companies, loading }) => {
         <span className="cl-col cl-col-name">Company</span>
         <span className="cl-col cl-col-code">Code</span>
         <span className="cl-col cl-col-stocks">No. of Stocks</span>
-        <span className="cl-col cl-col-price">Price Per Stock</span> {/* ✅ FIXED */}
+        <span className="cl-col cl-col-price">Price Per Stock</span>
+        <span className="cl-col cl-col-actions">Actions</span>
       </div>
 
       {/* Company Rows */}
@@ -41,6 +42,8 @@ const CompanyList = ({ companies, loading }) => {
             key={company.id || index}
             company={company}
             index={index}
+            onDelete={onDelete}
+            onUpdate={onUpdate}
           />
         ))}
       </div>

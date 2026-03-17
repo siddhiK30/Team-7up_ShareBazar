@@ -7,7 +7,7 @@ export const registerAPI = async (userData) => {
         const response = await axios.post(`${API_URL}/register`, userData);
         return response.data; 
     } catch (error) {
-        throw error.response?.data || "Registration failed. Server might be down.";
+        throw error;
     }
 };
 
@@ -16,6 +16,6 @@ export const loginAPI = async (credentials) => {
         const response = await axios.post(`${API_URL}/login`, credentials);
         return response.data; 
     } catch (error) {
-        throw error.response?.data || "Login failed. Check your credentials.";
+        throw error;
     }
 };

@@ -1,99 +1,121 @@
 /* src/components/CompanyCard.css */
 
 .cc-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1.2fr 1.5fr;
   align-items: center;
   padding: 16px 24px;
-  border-bottom: 1px solid #f2f2f2;
-  transition: background 0.15s;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s;
 }
 
-.cc-row:last-child { border-bottom: none; }
-.cc-row:hover { background: #fafbfc; }
+.cc-row:hover {
+  background: #f0f7ff;
+}
+
+.cc-row-even {
+  background: #fafbfc;
+}
+
+.cc-row-odd {
+  background: #fff;
+}
+
+/* Column text styles */
+.cc-col {
+  padding-right: 16px;
+}
 
 .cc-col-name {
-  flex: 2;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.cc-col-code { flex: 1; }
-.cc-col-stocks { flex: 1; text-align: right; }
-
-.cc-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-  font-size: 17px;
-  flex-shrink: 0;
-}
-
-.cc-name {
-  font-size: 15px;
   font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 1px;
+  color: #1e293b;
 }
 
-.cc-id {
-  font-size: 11px;
-  color: #bbb;
+.cc-col-code {
+  color: #475569;
+  font-family: monospace;
+  font-size: 14px;
 }
 
-.cc-code-badge {
-  display: inline-block;
-  background: #f0f2f5;
-  color: #1a1a2e;
-  padding: 5px 14px;
+.cc-col-stocks {
+  color: #334155;
+}
+
+.cc-col-price {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.cc-col-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Edit Input */
+.cc-edit-input {
+  width: 100px;
+  padding: 6px 10px;
+  border: 2px solid #4a90d9;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.cc-edit-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Action Buttons */
+.cc-action-group {
+  display: flex;
+  gap: 8px;
+}
+
+.cc-btn {
+  padding: 6px 14px;
+  border: none;
   border-radius: 6px;
   font-size: 13px;
-  font-weight: 700;
-  font-family: "Courier New", monospace;
-  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.cc-stock-number {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-  color: #00b386;
+.cc-btn-edit {
+  background: #e0f2fe;
+  color: #0369a1;
 }
 
-.cc-stock-label {
-  font-size: 11px;
-  color: #aaa;
-  text-transform: uppercase;
+.cc-btn-edit:hover {
+  background: #bae6fd;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 700px) {
-  .cc-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 16px 20px;
-  }
+.cc-btn-delete {
+  background: #fee2e2;
+  color: #dc2626;
+}
 
-  .cc-col-name,
-  .cc-col-code,
-  .cc-col-stocks {
-    width: 100%;
-    flex: none;
-    text-align: left;
-  }
+.cc-btn-delete:hover {
+  background: #fecaca;
+}
 
-  .cc-col-stocks {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+.cc-btn-save {
+  background: #dcfce7;
+  color: #16a34a;
+}
 
-  .cc-stock-number { display: inline; }
-  .cc-stock-label { display: inline; }
+.cc-btn-save:hover {
+  background: #bbf7d0;
+}
+
+.cc-btn-cancel {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.cc-btn-cancel:hover {
+  background: #e5e7eb;
 }

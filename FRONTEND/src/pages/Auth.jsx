@@ -29,14 +29,29 @@ const Auth = () => {
         setMessage({ type: 'success', text: 'Login Successful! Redirecting...' });
         setTimeout(() => navigate('/'), 1500); 
       } else {
-        const payload = { username: formData.username, email: formData.email, password: formData.password };
-        const response = await registerAPI(payload);
+const payload = { 
+  username: formData.username, 
+  email: formData.email, 
+  password: formData.password,
+  pan: formData.panNumber   // 🔥 ADD THIS LINE
+};     
+console.log("PAYLOAD:", payload);
+   const response = await registerAPI(payload);
         setMessage({ type: 'success', text: response || 'Registration Successful! Please login.' });
         setTimeout(() => { setIsLogin(true); setMessage({ type: '', text: '' }); }, 2000);
       }
     } catch (error) {
-        setMessage({ type: 'error', text: typeof error === 'string' ? error : 'Something went wrong' });
-    } finally {
+      if (error.response && error.response.data) {
+          const errors = error.response.data;
+
+          // Convert object → readable string
+          const errorText = Object.values(errors).join(", ");
+
+          setMessage({ type: 'error', text: errorText });
+      } else {
+          setMessage({ type: 'error', text: 'Something went wrong' });
+      }
+} finally {
         setLoading(false);
     }
   };
@@ -66,12 +81,19 @@ const Auth = () => {
             {isLogin ? 'Welcome back' : 'Create your account'}
           </h2>
 
-          {message.text && (
-            <div className={`p-3 mb-6 rounded-md text-sm font-medium text-center ${message.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
-              {message.text}
-            </div>
-          )}
-
+        {message.text && (
+  <div
+    className={`p-3 mb-6 rounded-md text-sm font-medium text-center ${
+      message.type === 'success'
+        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+        : 'bg-red-50 text-red-700 border border-red-200'
+    }`}
+  >
+    {typeof message.text === "object"
+      ? Object.values(message.text).join(", ")
+      : message.text}
+  </div>
+)}
           <form onSubmit={handleSubmit} className="space-y-5">
             {!isLogin && (
               <div>

@@ -1,42 +1,102 @@
-import React from "react";
+// src/components/CompanyCard.jsx
+
+import React, { useState } from "react";
 import "./CompanyCard.css";
 
-const CompanyCard = ({ company, index }) => {
-  const colors = ["#00b386", "#0984e3", "#e17055", "#6c5ce7", "#fdcb6e"];
-  const color = colors[index % colors.length];
+const CompanyCard = ({ company, index, onDelete, onUpdate }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    numberOfStocks: company.numberOfStocks || 0,
+    stockPrice: company.stockPrice || 0,
+  });
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditData((prev) => ({
+      ...prev,
+      [name]: Number(value),
+    }));
+  };
+
+  const handleSave = () => {
+    onUpdate(company.id, editData);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditData({
+      numberOfStocks: company.numberOfStocks || 0,
+      stockPrice: company.stockPrice || 0,
+    });
+    setIsEditing(false);
+  };
 
   return (
-    <div className="cc-row">
+    <div className={`cc-row ${index % 2 === 0 ? "cc-row-even" : "cc-row-odd"}`}>
       {/* Company Name */}
-      <div className="cc-col cc-col-name">
-        <div className="cc-avatar" style={{ backgroundColor: color }}>
-          {company.companyName?.charAt(0)?.toUpperCase() || "C"}
-        </div>
-        <div>
-          <h4 className="cc-name">{company.companyName}</h4>
-          <span className="cc-id">ID: {company.id}</span>
-        </div>
-      </div>
+      <div className="cc-col cc-col-name">{company.companyName}</div>
 
-      {/* Company Code */}
-      <div className="cc-col cc-col-code">
-        <span className="cc-code-badge">{company.companyCode}</span>
-      </div>
+      {/* Code */}
+      <div className="cc-col cc-col-code">{company.companyCode}</div>
 
-      {/* Number of Stocks */}
+      {/* Stocks */}
       <div className="cc-col cc-col-stocks">
-        <span className="cc-stock-number">
-          {company.numberOfStocks?.toLocaleString()}
-        </span>
-        <span className="cc-stock-label">shares</span>
+        {isEditing ? (
+          <input
+            type="number"
+            name="numberOfStocks"
+            className="cc-edit-input"
+            value={editData.numberOfStocks}
+            onChange={handleEditChange}
+          />
+        ) : (
+          company.numberOfStocks?.toLocaleString()
+        )}
       </div>
 
-      {/* ✅ Stock Price */}
-      <div className="cc-col cc-col-stocks">
-        <span className="cc-stock-price">
-          ₹{company.stockPrice?.toLocaleString()}
-        </span>
-        <span className="cc-stock-label">per share</span>
+      {/* Price */}
+      <div className="cc-col cc-col-price">
+        {isEditing ? (
+          <input
+            type="number"
+            step="0.01"
+            name="stockPrice"
+            className="cc-edit-input"
+            value={editData.stockPrice}
+            onChange={handleEditChange}
+          />
+        ) : (
+          `₹${company.stockPrice?.toLocaleString()}`
+        )}
+      </div>
+
+      {/* Actions */}
+      <div className="cc-col cc-col-actions">
+        {isEditing ? (
+          <div className="cc-action-group">
+            <button className="cc-btn cc-btn-save" onClick={handleSave}>
+              ✅ Save
+            </button>
+            <button className="cc-btn cc-btn-cancel" onClick={handleCancel}>
+              ❌ Cancel
+            </button>
+          </div>
+        ) : (
+          <div className="cc-action-group">
+            <button
+              className="cc-btn cc-btn-edit"
+              onClick={() => setIsEditing(true)}
+            >
+              ✏️ Edit
+            </button>
+            <button
+              className="cc-btn cc-btn-delete"
+              onClick={() => onDelete(company.id)}
+            >
+              🗑️ Delete
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
