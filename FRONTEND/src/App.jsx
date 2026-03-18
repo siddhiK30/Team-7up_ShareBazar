@@ -5,12 +5,15 @@ import Auth from './pages/Auth';
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from './components/AdminDashBoard';
 import Market from "./pages/Market";
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const location = useLocation();
 
   // Hide navbar on admin pages
   const hideNavbar = location.pathname.startsWith("/admin");
+
+  const token = localStorage.getItem("token");
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans selection:bg-green-500/30">
@@ -25,13 +28,27 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/market" element={<Market />} />
 
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminAuth />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          {/* Admin Login */}
+          <Route
+            path="/admin"
+            element={
+              token ? <Navigate to="/admin/dashboard" /> : <AdminAuth />
+            }
+          />
 
-          {/* Redirect unknown routes */}
+          {/* Protected Dashboard */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Fallback Route */}
           <Route path="*" element={<Navigate to="/" />} />
-          <Route path="/market" element={<Market />} />
+
         </Routes>
       </main>
     </div>
