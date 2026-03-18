@@ -21,21 +21,19 @@ public RouteLocator customRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
 
             // 🔐 Auth Service via Eureka
-            .route("auth_service", r -> r
-                .path("/api/auth/**")
-                .and()
-                .method(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS)
-                .filters(f -> f
-                        .rewritePath("/api/auth/(?<segment>.*)", "/api/admin/${segment}")
-                )
-                .uri("lb://SHARE-BAZAR-BACKEND")
-        )
+          .route("auth_service", r -> r
+    .path("/api/auth/**")
+    .filters(f -> f
+        .rewritePath("/api/auth/(?<segment>.*)", "/auth/${segment}")
+    )
+    .uri("lb://SHAREBAZARBACKEND")
+)
 
             .route("company_service", r -> r
                     .path("/companies/**")
                     .and()
                     .method(HttpMethod.GET, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PATCH)
-                    .uri("lb://COMPANY-SERVICE")  // 🔥 FIXED
+                    .uri("lb://ADMIN-SERVICE")  // 🔥 FIXED
             )
 
             .build();

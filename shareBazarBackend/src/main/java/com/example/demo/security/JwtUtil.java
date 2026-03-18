@@ -1,3 +1,5 @@
+// shareBazarBackend/src/main/java/com/example/demo/security/JwtUtil.java
+
 package com.example.demo.security;
 
 import io.jsonwebtoken.*;
@@ -17,27 +19,42 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    // ✅ Generate secure key
     private Key getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    // ✅ Generate token
-    public String generateToken(String email) {
+    // ✅ NEW - accepts userId
+    public String generateToken(String email, Long userId) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("userId", userId)
+                .claim("email", email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getKey(), SignatureAlgorithm.HS256) // ✅ FIXED
+                .setExpiration(
+                    new Date(System.currentTimeMillis() + expiration)
+                )
+                .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // ✅ Extract email
+    // ✅ OLD method - keep this so nothing breaks
+    public String generateToken(String email) {
+        return generateToken(email, null);
+    }
+
     public String extractEmail(String token) {
         return parseClaims(token).getSubject();
     }
 
-    // ✅ Validate token
+    public Long extractUserId(String token) {
+        try {
+            Object id = parseClaims(token).get("userId");
+            return id == null ? null : Long.valueOf(id.toString());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public boolean validateToken(String token) {
         try {
             return !parseClaims(token).getExpiration().before(new Date());
@@ -46,7 +63,6 @@ public class JwtUtil {
         }
     }
 
-    // ✅ Parse claims (UPDATED API)
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())
@@ -54,4 +70,4 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
-}	
+}

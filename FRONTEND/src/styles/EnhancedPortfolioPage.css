@@ -1,0 +1,373 @@
+/* ===== PORTFOLIO PAGE - SHAREBAZAR TRADING APP ===== */
+
+.portfolio-page {
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== PORTFOLIO BANNER ===== */
+.portfolio-banner {
+  background: linear-gradient(135deg, #0d9b4e 0%, #06753a 50%, #044d27 100%);
+  padding: 28px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-banner::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -5%;
+  width: 350px;
+  height: 350px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.portfolio-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  left: 5%;
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+}
+
+.banner-content {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.banner-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.banner-left .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.banner-left .back-link:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.banner-left h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+}
+
+.banner-left .viewing-label {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  margin: 6px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.viewing-label .portfolio-name-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  color: white;
+}
+
+.banner-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.banner-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.banner-stat .stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.banner-stat .stat-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-stat .stat-number {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+}
+
+.banner-stat .stat-label-text {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* ===== STATS CARDS (overlapping banner) ===== */
+.page-content {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: -36px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card.invested::before {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.stat-card.current::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.stat-card.gain::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.stat-card.loss::before {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.stat-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-card.invested .stat-card-icon {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.stat-card.current .stat-card-icon {
+  background: #ecfdf5;
+  color: #10b981;
+}
+
+.stat-card.gain .stat-card-icon {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.stat-card.loss .stat-card-icon {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.stat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card-content .stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card-content .stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  margin-top: 2px;
+}
+
+.stat-card.gain .stat-value {
+  color: #059669;
+}
+
+.stat-card.loss .stat-value {
+  color: #dc2626;
+}
+
+.gain-percent {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* ===== PORTFOLIO LAYOUT ===== */
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* ===== LEFT SECTION - Portfolio List ===== */
+.left-section {
+  position: sticky;
+  top: 24px;
+}
+
+/* ===== RIGHT SECTION - Holdings ===== */
+.right-section {
+  min-height: 400px;
+}
+
+.no-selection {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.no-selection .empty-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f0fdf4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #10b981;
+}
+
+.no-selection h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  margin: 0 0 6px;
+}
+
+.no-selection p {
+  color: #9ca3af;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ===== ERROR BANNER ===== */
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left-section {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+    margin-top: -20px;
+  }
+
+  .banner-top {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .banner-right {
+    flex-wrap: wrap;
+  }
+
+  .page-content {
+    padding: 0 16px 16px;
+  }
+
+  .portfolio-banner {
+    padding: 20px 0 50px;
+  }
+}

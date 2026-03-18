@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import com.example.demo.Entity.Portfolio;
 import com.example.demo.Entity.Holding;
 import com.example.demo.Entity.LatestPrice;
+import com.example.demo.Entity.Stock;
 import com.example.demo.dto.HoldingResponse;
 import com.example.demo.repo.HoldingRepository;
 import com.example.demo.repo.LatestPriceRepository;
 import com.example.demo.repo.PortfolioRepository;
+import com.example.demo.repo.StockRepository;
 
 @Service
 public class PortfolioService {
@@ -29,7 +31,9 @@ public class PortfolioService {
     @Autowired
     private LatestPriceRepository priceRepo;
 
-    // ✅ Create portfolio
+    @Autowired
+    private StockRepository stockRepo;    // ✅ ADD THIS
+
     public Portfolio createPortfolio(Long userId, String name) {
         Portfolio p = new Portfolio();
         p.setUserId(userId);
@@ -37,26 +41,32 @@ public class PortfolioService {
         return portfolioRepo.save(p);
     }
 
-    // ✅ Get portfolios
     public List<Portfolio> getUserPortfolios(Long userId) {
         return portfolioRepo.findByUserId(userId);
     }
 
-    // 🔥 View holdings with P/L
     public List<HoldingResponse> getHoldings(Long portfolioId) {
 
         List<Holding> holdings = holdingRepo.findByPortfolioId(portfolioId);
 
-        // ❗ FIX: replace .toList()
         List<Long> ids = holdings.stream()
                 .map(Holding::getCompanyId)
                 .collect(Collectors.toList());
 
+        // ✅ Price map
         Map<Long, Double> priceMap = priceRepo.findByStockIdIn(ids)
                 .stream()
                 .collect(Collectors.toMap(
                         LatestPrice::getStockId,
                         LatestPrice::getPrice
+                ));
+
+        // ✅ ADD: Stock name map
+        Map<Long, Stock> stockMap = stockRepo.findAllById(ids)
+                .stream()
+                .collect(Collectors.toMap(
+                        Stock::getId,
+                        stock -> stock
                 ));
 
         List<HoldingResponse> res = new ArrayList<>();
@@ -65,14 +75,10 @@ public class PortfolioService {
 
             double current = priceMap.getOrDefault(h.getCompanyId(), 0.0);
             double avg = h.getAvgBuyPrice();
-
             double pl = (current - avg) * h.getQuantity();
-            double plPercent = avg == 0 ? 0 :
-                    ((current - avg) / avg) * 100;
+            double plPercent = avg == 0 ? 0 : ((current - avg) / avg) * 100;
 
             HoldingResponse r = new HoldingResponse();
-
-            // ❗ USE SETTERS (important)
             r.setCompanyId(h.getCompanyId());
             r.setQuantity(h.getQuantity());
             r.setAvgBuyPrice(avg);
@@ -80,15 +86,20 @@ public class PortfolioService {
             r.setProfitLoss(pl);
             r.setProfitLossPercent(plPercent);
 
+            // ✅ ADD: Set stock name
+            Stock stock = stockMap.get(h.getCompanyId());
+            if (stock != null) {
+                r.setCompanyName(stock.getCompanyName());
+                r.setCompanyCode(stock.getCompanyCode());
+            }
+
             res.add(r);
         }
 
         return res;
     }
 
-    // 🔥 TEMP: Add stock
     public void addStock(Long portfolioId, Long companyId, int qty, double price) {
-
         Holding h = holdingRepo
                 .findByPortfolioIdAndCompanyId(portfolioId, companyId)
                 .orElse(null);
@@ -101,10 +112,8 @@ public class PortfolioService {
             h.setAvgBuyPrice(price);
         } else {
             int total = h.getQuantity() + qty;
-
             double newAvg = ((h.getQuantity() * h.getAvgBuyPrice())
                     + (qty * price)) / total;
-
             h.setQuantity(total);
             h.setAvgBuyPrice(newAvg);
         }
@@ -112,8 +121,8 @@ public class PortfolioService {
         h.setUpdatedAt(LocalDateTime.now());
         holdingRepo.save(h);
     }
-    public void sellStock(Long portfolioId, Long companyId, int qty) {
 
+    public void sellStock(Long portfolioId, Long companyId, int qty) {
         Holding h = holdingRepo
                 .findByPortfolioIdAndCompanyId(portfolioId, companyId)
                 .orElseThrow(() -> new RuntimeException("Stock not found"));
@@ -123,7 +132,6 @@ public class PortfolioService {
         }
 
         int remaining = h.getQuantity() - qty;
-
         if (remaining == 0) {
             holdingRepo.delete(h);
         } else {

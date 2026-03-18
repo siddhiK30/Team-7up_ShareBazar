@@ -6,6 +6,7 @@ import { loginAPI, registerAPI } from '../services/api';
 const Auth = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  
 
   // ✅ FIX ONLY THIS
   const [isLogin, setIsLogin] = useState(true);
@@ -47,7 +48,7 @@ const Auth = () => {
 
         localStorage.setItem('token', response.token);
         setMessage({ type: 'success', text: 'Login Successful! Redirecting...' });
-        setTimeout(() => navigate('/'), 1500);
+        setTimeout(() => navigate('/explore'), 1500);
 
       } else {
         const payload = {

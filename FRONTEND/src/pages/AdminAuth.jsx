@@ -9,21 +9,36 @@ const AdminAuth = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
- const handleSubmit = async (e) => {
+//  const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const res = await loginAPI({
+//       username: "admin",   // for now fixed
+//       password: password
+//     });
+//     // 🔐 store JWT
+//     localStorage.setItem("token", res.token);
+//     // optional role
+//     localStorage.setItem("role", res.role);
+//     navigate('/admin/dashboard');
+//   } catch (err) {
+//     setError("Invalid credentials");
+//   }
+
+const handleSubmit = (e) => {
   e.preventDefault();
-  try {
-    const res = await loginAPI({
-      username: "admin",   // for now fixed
-      password: password
-    });
-    // 🔐 store JWT
-    localStorage.setItem("token", res.token);
-    // optional role
-    localStorage.setItem("role", res.role);
+
+  // ✅ HARD-CODED CHECK IN FRONTEND
+  if (password === "admin123") {
+    // fake token (for now)
+    localStorage.setItem("token", "dummy-token");
+    localStorage.setItem("role", "ADMIN");
+
     navigate('/admin/dashboard');
-  } catch (err) {
-    setError("Invalid credentials");
+  } else {
+    setError("Wrong password");
   }
+
 };
 
   return (

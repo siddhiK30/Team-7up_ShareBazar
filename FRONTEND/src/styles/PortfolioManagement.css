@@ -1,0 +1,314 @@
+/* ===== PORTFOLIO MANAGEMENT - SHAREBAZAR ===== */
+
+.portfolio-management {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  background: #fafbfc;
+}
+
+.management-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.btn-add-portfolio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-add-portfolio:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Create Form */
+.create-portfolio-form {
+  padding: 16px 20px;
+  background: #f0fdf4;
+  border-bottom: 1px solid #d1fae5;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.create-portfolio-form input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #d1fae5;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  background: white;
+  margin-bottom: 10px;
+  transition: border-color 0.2s ease;
+}
+
+.create-portfolio-form input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+/* Portfolio List */
+.portfolios-list {
+  padding: 8px;
+}
+
+.portfolio-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 4px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.portfolio-item:hover {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+.portfolio-item.selected {
+  background: #f0fdf4;
+  border-color: #10b981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+}
+
+.portfolio-item.selected::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 24px;
+  background: #10b981;
+  border-radius: 0 4px 4px 0;
+}
+
+.portfolio-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 2px;
+}
+
+.portfolio-date {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 0;
+  font-weight: 500;
+}
+
+.portfolio-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+}
+
+.action-btn.edit:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  background: #eff6ff;
+}
+
+.action-btn.delete:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* Edit Form */
+.edit-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  background: white;
+}
+
+.edit-input:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* Delete Confirmation */
+.delete-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.confirm-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+.action-btn.save {
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #059669;
+}
+
+.action-btn.save:hover {
+  background: #d1fae5;
+}
+
+.action-btn.cancel {
+  color: #6b7280;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+}
+
+.action-btn.cancel:hover {
+  background: #e5e7eb;
+}
+
+.action-btn.confirm-yes {
+  color: white;
+  background: #dc2626;
+  border: none;
+}
+
+.action-btn.confirm-yes:hover {
+  background: #b91c1c;
+}
+
+.action-btn.confirm-no {
+  color: #6b7280;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+}
+
+.action-btn.confirm-no:hover {
+  background: #e5e7eb;
+}
+
+/* Empty State */
+.empty-portfolios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+}
+
+.empty-portfolios p {
+  font-size: 13px;
+  margin: 12px 0 0;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+  font-size: 14px;
+}

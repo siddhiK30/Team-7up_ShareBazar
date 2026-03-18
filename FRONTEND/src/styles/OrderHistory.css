@@ -1,0 +1,213 @@
+.order-history {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.history-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.total-orders {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.orders-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr 1fr 1.2fr 1fr 1.2fr;
+  gap: 0;
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  padding: 0;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr 1fr 1.2fr 1fr 1.2fr;
+  gap: 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0;
+  transition: background 0.2s ease;
+  align-items: center;
+}
+
+.table-row:hover {
+  background: #f9fafb;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.col {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.col:last-child {
+  border-right: none;
+}
+
+.col-type,
+.col-qty,
+.col-price,
+.col-total,
+.col-status,
+.col-date {
+  justify-content: center;
+  text-align: center;
+}
+
+.type-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.type-badge.buy {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #0c4a6e;
+  border: 1px solid #93c5fd;
+}
+
+.type-badge.sell {
+  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+  color: #831843;
+  border: 1px solid #f9a8d4;
+}
+
+.company-id {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.success {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.status-badge.failed {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.date-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.total {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #9ca3af;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty-state svg {
+  opacity: 0.4;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.loading {
+  text-align: center;
+  padding: 32px 24px;
+  color: #6b7280;
+}
+
+@media (max-width: 1200px) {
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .col-date {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .col-price,
+  .col-total,
+  .col-date {
+    display: none;
+  }
+
+  .col {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+
+  .type-badge {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
