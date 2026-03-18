@@ -1,6 +1,7 @@
 // src/components/AdminDashboard.jsx
-
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { TrendingUp, User } from "lucide-react"; // ✅ NEW
 import CompanyForm from "./CompanyForm";
 import CompanyList from "./CompanyList";
 import ConfirmModal from "./ConfirmModal";
@@ -13,14 +14,12 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("list");
 
-  // Modal state
   const [confirmModal, setConfirmModal] = useState({
     show: false,
     companyId: null,
     companyName: "",
   });
 
-  // Toast state
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
   const showToast = (message, type = "success") => {
@@ -99,26 +98,69 @@ const AdminDashboard = () => {
   return (
     <div className="admin-page">
 
-      {/* ✅ NEW SIMPLE NAVBAR */}
-      <div className="bg-white border-b p-4 flex justify-between items-center">
-        
-        {/* Left */}
-        <div className="flex gap-6 font-semibold">
-          <span className="cursor-pointer hover:text-emerald-500">Stocks</span>
-          <span className="cursor-pointer hover:text-emerald-500">Mutual Funds</span>
-          <span className="cursor-pointer hover:text-emerald-500">Share Market</span>
-        </div>
+      {/* 🔥 UPDATED NAVBAR */}
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-20">
 
-        {/* Right */}
-        <button
-          onClick={() => {
-            localStorage.removeItem("isAdmin");
-            window.location.href = "/";
-          }}
-          className="bg-red-500 text-white px-4 py-2 rounded-md"
-        >
-          Logout
-        </button>
+          {/* LEFT */}
+          <div className="flex items-center space-x-10">
+
+            {/* Logo */}
+            <div className="flex items-center space-x-2 cursor-pointer">
+              <div className="bg-emerald-500 p-1.5 rounded-md">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <span className="text-2xl font-bold text-gray-900">
+                Share<span className="text-emerald-500">Bazar</span>
+              </span>
+            </div>
+
+            {/* Links */}
+            <div className="flex items-center space-x-6 text-gray-700 font-medium">
+              <div className="flex items-center space-x-6 text-gray-700 font-medium">
+
+  <Link
+    to="/explore"
+    className="hover:text-emerald-500 cursor-pointer"
+  >
+    Stocks
+  </Link>
+
+  <Link
+    to="/explore"
+    className="hover:text-emerald-500 cursor-pointer"
+  >
+    Mutual Funds
+  </Link>
+
+</div>
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <div className="flex items-center space-x-4">
+
+            {/* User */}
+            <div className="flex items-center space-x-2 bg-gray-100 px-3 py-1.5 rounded-full">
+              <User className="w-4 h-4 text-emerald-600" />
+              <span className="text-sm font-semibold text-gray-800">
+                Admin
+              </span>
+            </div>
+
+            {/* Logout */}
+            <button
+              onClick={() => {
+                localStorage.removeItem("isAdmin");
+                window.location.href = "/";
+              }}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+            >
+              Logout
+            </button>
+
+          </div>
+        </div>
       </div>
 
       {/* Toast */}
@@ -141,7 +183,7 @@ const AdminDashboard = () => {
         />
       )}
 
-      {/* MAIN CONTENT (UNCHANGED) */}
+      {/* MAIN CONTENT */}
       <div className="admin-container">
         <div className="tab-nav">
           <button

@@ -7,9 +7,9 @@ const Auth = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ FIX ONLY THIS
   const [isLogin, setIsLogin] = useState(true);
 
+  // ✅ Toggle login/register
   useEffect(() => {
     if (location.state?.isRegister === true) {
       setIsLogin(false);
@@ -17,6 +17,14 @@ const Auth = () => {
       setIsLogin(true);
     }
   }, [location]);
+
+  // ✅ AUTO REDIRECT if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/explore");
+    }
+  }, [navigate]);
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -45,9 +53,16 @@ const Auth = () => {
           password: formData.password
         });
 
+        // ✅ SAVE TOKEN
         localStorage.setItem('token', response.token);
-        setMessage({ type: 'success', text: 'Login Successful! Redirecting...' });
-        setTimeout(() => navigate('/'), 1500);
+
+        // ✅ TRIGGER APP UPDATE
+        window.dispatchEvent(new Event("storage"));
+
+        setMessage({ type: 'success', text: 'Login Successful!' });
+
+        // ✅ INSTANT REDIRECT
+        navigate('/explore');
 
       } else {
         const payload = {
@@ -85,15 +100,15 @@ const Auth = () => {
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-        
-        {/* Toggle Header */}
+
+        {/* Toggle */}
         <div className="flex border-b border-gray-100">
           <button 
             onClick={() => setIsLogin(true)} 
-            className={`flex-1 py-4 text-sm font-bold transition-colors ${
+            className={`flex-1 py-4 text-sm font-bold ${
               isLogin
                 ? 'text-emerald-600 border-b-2 border-emerald-500 bg-emerald-50/30'
-                : 'text-gray-500 hover:text-gray-700'
+                : 'text-gray-500'
             }`}
           >
             Login
@@ -101,10 +116,10 @@ const Auth = () => {
 
           <button 
             onClick={() => setIsLogin(false)} 
-            className={`flex-1 py-4 text-sm font-bold transition-colors ${
+            className={`flex-1 py-4 text-sm font-bold ${
               !isLogin
                 ? 'text-emerald-600 border-b-2 border-emerald-500 bg-emerald-50/30'
-                : 'text-gray-500 hover:text-gray-700'
+                : 'text-gray-500'
             }`}
           >
             Register
@@ -112,89 +127,53 @@ const Auth = () => {
         </div>
 
         <div className="p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          <h2 className="text-2xl font-bold text-center mb-6">
             {isLogin ? 'Welcome back' : 'Create your account'}
           </h2>
 
           {message.text && (
-            <div className={`p-3 mb-6 rounded-md text-sm font-medium text-center ${
-              message.type === 'success'
-                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                : 'bg-red-50 text-red-700 border border-red-200'
-            }`}>
-              {typeof message.text === "object"
-                ? Object.values(message.text).join(", ")
-                : message.text}
+            <div className="p-3 mb-6 rounded-md text-sm text-center">
+              {message.text}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            
-            {!isLogin && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition shadow-sm"
-                />
-              </div>
-            )}
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition shadow-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition shadow-sm"
-              />
-            </div>
 
             {!isLogin && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  PAN Card Number
-                </label>
-                <input
-                  type="text"
-                  name="panNumber"
-                  value={formData.panNumber}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition shadow-sm uppercase"
-                />
-              </div>
+              <input
+                name="username"
+                placeholder="Full Name"
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+              />
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full mt-6 bg-emerald-500 text-white py-3.5 rounded-lg text-lg font-bold hover:bg-emerald-600 transition shadow-md disabled:opacity-50"
-            >
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg"
+            />
+
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg"
+            />
+
+            {!isLogin && (
+              <input
+                name="panNumber"
+                placeholder="PAN"
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+              />
+            )}
+
+            <button className="w-full bg-emerald-500 text-white py-3 rounded-lg">
               {loading ? "Processing..." : isLogin ? "Login" : "Register"}
             </button>
           </form>
