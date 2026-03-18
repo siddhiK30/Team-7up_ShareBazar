@@ -1,19 +1,28 @@
-package com.example.exchanger_service.Services;
+package com.example.exchanger_service.services;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.Profile;
-import com.example.exchanger_service.Entities.Stock;
-import com.example.exchanger_service.Repository.StockRepository;
+
+import com.example.exchanger_service.entities.Stock;
+import com.example.exchanger_service.repository.StockRepository;
 
 @Component
 @Profile("!test") // ✅ This tells Spring: "Do NOT run this during Unit Tests"
 public class StockBatchExchanger implements CommandLineRunner {
 
+    // ✅ Added Logger to fix System.out.println Code Smells
+    private static final Logger logger = LoggerFactory.getLogger(StockBatchExchanger.class);
+    
     private final StockRepository repository;
-    private final Random random = new Random();
+    
+    // ✅ Replaced Random with SecureRandom to fix the Security Hotspot
+    private final SecureRandom random = new SecureRandom();
 
     public StockBatchExchanger(StockRepository repository) {
         this.repository = repository;
@@ -27,7 +36,7 @@ public class StockBatchExchanger implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("== Starting price simulation loop...");
+        logger.info("== Starting price simulation loop...");
 
         // We run this in a loop to simulate live market changes
         for (int i = 1; i <= 5; i++) { 
@@ -35,14 +44,13 @@ public class StockBatchExchanger implements CommandLineRunner {
             for (Stock stock : stocks) {
                 double newPrice = fluctuate(stock.getPrice());
                 stock.setPrice(newPrice);
-                System.out.println("Market Update: " + stock.getCode() + " is now " + newPrice);
+                logger.info("Market Update: {} is now {}", stock.getCode(), newPrice);
             }
             repository.saveAll(stocks);
-            System.out.println("Iteration " + i + " saved to DB.");
+            logger.info("Iteration {} saved to DB.", i);
             Thread.sleep(2000); // Wait 2 seconds between updates
         }
 
-        System.out.println("== Initial Simulation Batch Completed.");
-        // ✅ System.exit(0) REMOVED. This keeps your microservice running!
+        logger.info("== Initial Simulation Batch Completed.");
     }
 }
