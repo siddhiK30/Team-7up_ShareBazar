@@ -34,7 +34,9 @@ public void setStockPrice(double stockPrice) {
     this.stockPrice = stockPrice;
 }
 
-    public Company() {}
+public Company() {
+    // Empty constructor required by Hibernate
+}
 
     public Long getId() { return id; }
 

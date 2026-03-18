@@ -14,9 +14,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import com.example.exchanger_service.Controller.StockController;
-import com.example.exchanger_service.Entities.Stock;
-import com.example.exchanger_service.Services.StockService;
+import com.example.exchanger_service.controller.StockController;
+import com.example.exchanger_service.entities.Stock;
+import com.example.exchanger_service.services.StockService;
 
 @WebMvcTest(StockController.class)
 class StockControllerTest {

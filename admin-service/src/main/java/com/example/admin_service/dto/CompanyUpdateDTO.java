@@ -7,6 +7,7 @@ public class CompanyUpdateDTO {
 
     // --- Empty Constructor ---
     public CompanyUpdateDTO() {
+        // Default constructor needed for Jackson/JPA
     }
 
     // --- GETTERS AND SETTERS ---

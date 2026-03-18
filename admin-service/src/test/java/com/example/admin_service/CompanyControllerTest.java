@@ -67,7 +67,7 @@ class CompanyControllerTest {
                 .andExpect(jsonPath("$.length()").value(2));
     }
 
-    // ✅ TEST 3 — DELETE /companies/{id}
+    
     @Test
     void shouldDeleteCompany() throws Exception {
         doNothing().when(service).deleteCompany(1L);
@@ -78,7 +78,7 @@ class CompanyControllerTest {
                 .andExpect(content().string("Company deleted successfully"));
     }
 
-    // ✅ TEST 4 — PATCH /companies/{id}
+    
     @Test
     void shouldUpdateCompanyPartial() throws Exception {
         String dtoUpdateJson = """

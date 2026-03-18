@@ -1,11 +1,11 @@
-package com.example.exchanger_service.Services;
+package com.example.exchanger_service.services;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.exchanger_service.Entities.Stock;
-import com.example.exchanger_service.Repository.StockRepository;
+import com.example.exchanger_service.entities.Stock;
+import com.example.exchanger_service.repository.StockRepository;
 
 @Service
 public class StockService {

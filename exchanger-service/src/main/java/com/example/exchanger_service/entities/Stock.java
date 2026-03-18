@@ -1,4 +1,4 @@
-package com.example.exchanger_service.Entities;
+package com.example.exchanger_service.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -14,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.exchanger_service.Entities.Stock;
-import com.example.exchanger_service.Repository.StockRepository;
-import com.example.exchanger_service.Services.StockService;
+import com.example.exchanger_service.entities.Stock;
+import com.example.exchanger_service.repository.StockRepository;
+import com.example.exchanger_service.services.StockService;
 
 @ExtendWith(MockitoExtension.class)
 class StockServiceTest {
