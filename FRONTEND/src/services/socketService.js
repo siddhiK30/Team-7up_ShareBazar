@@ -4,7 +4,7 @@ import { Client } from "@stomp/stompjs";
 let stompClient = null;
 
 export const connectSocket = (onMessageReceived) => {
-  const socket = new SockJS("http://localhost:8080/ws");
+  const socket = new SockJS("http://localhost:8083/ws");
 
   stompClient = new Client({
     webSocketFactory: () => socket,
