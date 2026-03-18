@@ -13,14 +13,14 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("list");
 
-  // ✅ Modal state
+  // Modal state
   const [confirmModal, setConfirmModal] = useState({
     show: false,
     companyId: null,
     companyName: "",
   });
 
-  // ✅ Toast state
+  // Toast state
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
   const showToast = (message, type = "success") => {
@@ -56,7 +56,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // ✅ Opens modal instead of window.confirm
   const handleDeleteRequest = (id) => {
     const company = companies.find((c) => c.id === id);
     setConfirmModal({
@@ -66,10 +65,10 @@ const AdminDashboard = () => {
     });
   };
 
-  // ✅ Actual delete after modal confirm
   const handleDeleteConfirm = async () => {
     const { companyId, companyName } = confirmModal;
     setConfirmModal({ show: false, companyId: null, companyName: "" });
+
     try {
       await companyService.deleteCompany(companyId);
       setCompanies((prev) => prev.filter((c) => c.id !== companyId));
@@ -84,7 +83,6 @@ const AdminDashboard = () => {
     setConfirmModal({ show: false, companyId: null, companyName: "" });
   };
 
-  // ✅ Update with toast
   const handleUpdateCompany = async (id, updateData) => {
     try {
       const updated = await companyService.updateCompany(id, updateData);
@@ -98,14 +96,32 @@ const AdminDashboard = () => {
     }
   };
 
-  const totalStocks = companies.reduce(
-    (sum, c) => sum + (c.numberOfStocks || 0),
-    0
-  );
-
   return (
     <div className="admin-page">
-      {/* ✅ Toast Notification */}
+
+      {/* ✅ NEW SIMPLE NAVBAR */}
+      <div className="bg-white border-b p-4 flex justify-between items-center">
+        
+        {/* Left */}
+        <div className="flex gap-6 font-semibold">
+          <span className="cursor-pointer hover:text-emerald-500">Stocks</span>
+          <span className="cursor-pointer hover:text-emerald-500">Mutual Funds</span>
+          <span className="cursor-pointer hover:text-emerald-500">Share Market</span>
+        </div>
+
+        {/* Right */}
+        <button
+          onClick={() => {
+            localStorage.removeItem("isAdmin");
+            window.location.href = "/";
+          }}
+          className="bg-red-500 text-white px-4 py-2 rounded-md"
+        >
+          Logout
+        </button>
+      </div>
+
+      {/* Toast */}
       {toast.show && (
         <Toast
           message={toast.message}
@@ -114,40 +130,18 @@ const AdminDashboard = () => {
         />
       )}
 
-      {/* ✅ Confirm Modal */}
+      {/* Confirm Modal */}
       {confirmModal.show && (
         <ConfirmModal
           title="Delete Company"
-          message={`Are you sure you want to delete "${confirmModal.companyName}"? This action cannot be undone.`}
+          message={`Are you sure you want to delete "${confirmModal.companyName}"?`}
           type="danger"
           onConfirm={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
         />
       )}
 
-      {/* Admin Header */}
-      <div className="admin-header">
-        <div className="admin-header-content">
-          <div className="admin-title-section">
-            <h1>Admin Dashboard</h1>
-            <p>Manage companies listed on ShareBazar</p>
-          </div>
-          <div className="admin-stats">
-            <div className="stat-box">
-              <span className="stat-number">{companies.length}</span>
-              <span className="stat-label">Companies</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-number">
-                {totalStocks.toLocaleString()}
-              </span>
-              <span className="stat-label">Total Stocks</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
+      {/* MAIN CONTENT (UNCHANGED) */}
       <div className="admin-container">
         <div className="tab-nav">
           <button
@@ -156,6 +150,7 @@ const AdminDashboard = () => {
           >
             📋 All Companies
           </button>
+
           <button
             className={`tab-btn ${activeTab === "add" ? "active" : ""}`}
             onClick={() => setActiveTab("add")}

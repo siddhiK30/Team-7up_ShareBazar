@@ -1,23 +1,32 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Auth from './pages/Auth';
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from './components/AdminDashBoard';
+import Market from "./pages/Market";
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
+  const location = useLocation();
+
+  // Hide navbar on admin pages
+  const hideNavbar = location.pathname.startsWith("/admin");
+
   const token = localStorage.getItem("token");
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans selection:bg-green-500/30">
-      <Navbar />
+      
+      {/* Navbar only for user pages */}
+      {!hideNavbar && <Navbar />}
+
       <main>
         <Routes>
-
-          {/* Public Routes */}
+          {/* User Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/market" element={<Market />} />
 
           {/* Admin Login */}
           <Route
