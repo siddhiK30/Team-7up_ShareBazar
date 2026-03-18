@@ -1,7 +1,7 @@
 // src/pages/AdminAuth.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { loginAPI } from '../services/api';
 
 const AdminAuth = () => {
   const navigate = useNavigate();
@@ -9,16 +9,22 @@ const AdminAuth = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (password === 'admin123') {
-      localStorage.setItem('isAdmin', 'true'); // simple flag
-      navigate('/admin/dashboard');
-    } else {
-      setError('Wrong password');
-    }
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await loginAPI({
+      username: "admin",   // for now fixed
+      password: password
+    });
+    // 🔐 store JWT
+    localStorage.setItem("token", res.token);
+    // optional role
+    localStorage.setItem("role", res.role);
+    navigate('/admin/dashboard');
+  } catch (err) {
+    setError("Invalid credentials");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
