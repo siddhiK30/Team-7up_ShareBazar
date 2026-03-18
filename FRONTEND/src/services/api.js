@@ -1,21 +1,11 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080/api/auth';
+import api from './axiosInstance';
 
 export const registerAPI = async (userData) => {
-    try {
-        const response = await axios.post(`${API_URL}/register`, userData);
-        return response.data; 
-    } catch (error) {
-        throw error;
-    }
+    const response = await api.post('/api/auth/register', userData);
+    return response.data;
 };
 
 export const loginAPI = async (credentials) => {
-    try {
-        const response = await axios.post(`${API_URL}/login`, credentials);
-        return response.data; 
-    } catch (error) {
-        throw error;
-    }
+    const response = await api.post('/api/auth/login', credentials);
+    return response.data;
 };

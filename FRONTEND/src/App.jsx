@@ -49,15 +49,25 @@ import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from './components/AdminDashBoard';
 import Market from "./pages/Market";
 import ProtectedRoute from './components/ProtectedRoute';
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> f7a393174bdc420e17332afe3fcc6f323dcd288a
 function App() {
   const location = useLocation();
  
   // Hide navbar on admin pages
   const hideNavbar = location.pathname.startsWith("/admin");
+<<<<<<< HEAD
  
   const token = localStorage.getItem("token");
  
+=======
+
+  const token = localStorage.getItem("token");
+
+>>>>>>> f7a393174bdc420e17332afe3fcc6f323dcd288a
   return (
     <div className="min-h-screen bg-slate-950 font-sans selection:bg-green-500/30">
      
@@ -70,7 +80,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/market" element={<Market />} />
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> f7a393174bdc420e17332afe3fcc6f323dcd288a
           {/* Admin Login */}
           <Route
             path="/admin"
@@ -78,7 +92,11 @@ function App() {
               token ? <Navigate to="/admin/dashboard" /> : <AdminAuth />
             }
           />
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> f7a393174bdc420e17332afe3fcc6f323dcd288a
           {/* Protected Dashboard */}
           <Route
             path="/admin/dashboard"
@@ -88,10 +106,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+<<<<<<< HEAD
  
           {/* Fallback Route */}
           <Route path="*" element={<Navigate to="/" />} />
  
+=======
+
+          {/* Fallback Route */}
+          <Route path="*" element={<Navigate to="/" />} />
+
+>>>>>>> f7a393174bdc420e17332afe3fcc6f323dcd288a
         </Routes>
       </main>
     </div>
