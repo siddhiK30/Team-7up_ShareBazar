@@ -35,8 +35,8 @@ public class WalletService {
         Wallet w = new Wallet();
         w.setId(UUID.randomUUID().toString());   // ✅ Random unique ID
         w.setUserId(userId);                      // ✅ Actual userId
-        w.setBalance(BigDecimal.valueOf(100000)); // ✅ Starting balance
-        w.setMinBalance(BigDecimal.valueOf(0));
+        w.setBalance(BigDecimal.valueOf(100)); // ✅ Starting balance
+        w.setMinBalance(BigDecimal.valueOf(100));
         return walletRepository.save(w);
     }
 

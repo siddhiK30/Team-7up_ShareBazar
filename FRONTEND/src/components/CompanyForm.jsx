@@ -8,7 +8,7 @@ const CompanyForm = ({ onCompanyAdded }) => {
     companyName: "",
     companyCode: "",
     numberOfStocks: "",
-    stockPrice: "", // ✅ ADDED
+    stockPrice: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const CompanyForm = ({ onCompanyAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Validation
+    // Validation
     if (!formData.companyName.trim()) {
       setError("Company name is required");
       return;
@@ -41,8 +41,14 @@ const CompanyForm = ({ onCompanyAdded }) => {
       return;
     }
 
+    // ✅ UPDATED: must not be more than 1000
     if (!formData.numberOfStocks || formData.numberOfStocks <= 0) {
       setError("Number of stocks must be greater than 0");
+      return;
+    }
+
+    if (formData.numberOfStocks > 1000) {
+      setError("Number of stocks cannot be more than 1000");
       return;
     }
 
@@ -54,7 +60,6 @@ const CompanyForm = ({ onCompanyAdded }) => {
     setLoading(true);
 
     try {
-      // ✅ Payload with stockPrice
       const payload = {
         companyName: formData.companyName.trim(),
         companyCode: formData.companyCode.trim().toUpperCase(),
@@ -64,7 +69,7 @@ const CompanyForm = ({ onCompanyAdded }) => {
 
       await onCompanyAdded(payload);
 
-      // ✅ Reset form
+      // Reset form
       setFormData({
         companyName: "",
         companyCode: "",
@@ -143,16 +148,17 @@ const CompanyForm = ({ onCompanyAdded }) => {
             <input
               type="number"
               name="numberOfStocks"
-              placeholder="e.g. 50000"
+              placeholder="e.g. 500"
               value={formData.numberOfStocks}
               onChange={handleChange}
               min="1"
+              max="1000" // ✅ UPDATED
               required
             />
-            <span className="cf-hint">Total available shares</span>
+            <span className="cf-hint">Maximum 1000 shares allowed</span> {/* ✅ UPDATED */}
           </div>
 
-          {/* ✅ Stock Price */}
+          {/* Stock Price */}
           <div className="cf-field">
             <label>Stock Price (₹) *</label>
             <input

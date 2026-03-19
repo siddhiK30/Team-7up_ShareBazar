@@ -19,9 +19,7 @@ public class PriceHistory {
     private Long id;
 
     private Long stockId;
-
     private double price;
-
     private LocalDateTime timestamp;
 
     public PriceHistory() {
@@ -33,9 +31,5 @@ public class PriceHistory {
         this.price = price;
         this.timestamp = timestamp;
     }
-
-    
-
-    
 
 }

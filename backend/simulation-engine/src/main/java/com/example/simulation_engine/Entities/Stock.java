@@ -21,14 +21,9 @@ public class Stock {
     private String companyName;
     private String companyCode;
     private double faceValue;
-
     private boolean isActive;
-
     private double volatilityFactor;
-
     private LocalDateTime addedOn;
-
-    
 
     public Stock(Long id, String companyName, String companyCode, double faceValue, boolean isActive,
             double volatilityFactor, LocalDateTime addedOn) {
@@ -99,6 +94,5 @@ public class Stock {
     public void setAddedOn(LocalDateTime addedOn) {
         this.addedOn = addedOn;
     }
-
     
 }

@@ -1,0 +1,262 @@
+/* ===== OVERLAY ===== */
+.add-money-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: addMoneyFadeIn 0.2s ease;
+}
+
+@keyframes addMoneyFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== CONTAINER ===== */
+.add-money-container {
+  background: white;
+  border-radius: 16px;
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  animation: addMoneySlideUp 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes addMoneySlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== HEADER ===== */
+.add-money-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+}
+
+.add-money-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.add-money-icon {
+  background: #10b981;
+  color: white;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-money-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.add-money-close-btn {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-money-close-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+
+/* ===== BODY ===== */
+.add-money-body {
+  padding: 24px;
+}
+
+/* Amount Input */
+.add-money-input-wrapper {
+  margin-bottom: 20px;
+}
+
+.add-money-input-wrapper label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.add-money-input-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.2s;
+  background: #fafafa;
+}
+
+.add-money-input-box:focus-within {
+  border-color: #10b981;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.add-money-rupee-icon {
+  color: #6b7280;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.add-money-input-box input {
+  border: none;
+  outline: none;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  width: 100%;
+  background: transparent;
+}
+
+.add-money-input-box input::placeholder {
+  color: #d1d5db;
+}
+
+.add-money-input-box input::-webkit-outer-spin-button,
+.add-money-input-box input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-money-input-box input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.add-money-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+  display: block;
+}
+
+/* Quick Amounts */
+.add-money-quick {
+  margin-top: 8px;
+}
+
+.add-money-quick label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.add-money-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.add-money-quick-btn {
+  padding: 10px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-money-quick-btn:hover {
+  border-color: #10b981;
+  color: #10b981;
+  background: #f0fdf4;
+}
+
+.add-money-quick-btn.active {
+  border-color: #10b981;
+  background: #10b981;
+  color: white;
+}
+
+/* ===== FOOTER ===== */
+.add-money-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.add-money-cancel-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-money-cancel-btn:hover {
+  background: #f3f4f6;
+}
+
+.add-money-confirm-btn {
+  flex: 2;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.add-money-confirm-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.add-money-confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

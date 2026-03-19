@@ -4,6 +4,7 @@ import java.util.List;   // ✅ IMPORTANT
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Entity.Portfolio;          // ✅ fix package (entity not Entity)
@@ -45,12 +46,32 @@ public class PortfolioController {
         );
     }
 
+    // @PostMapping("/internal/sellStock")
+    // public void sellStock(@RequestBody Map<String, Object> data) {
+    //     service.sellStock(
+    //         Long.valueOf(data.get("portfolioId").toString()),
+    //         Long.valueOf(data.get("companyId").toString()),
+    //         Integer.parseInt(data.get("qty").toString())
+    //     );
+    // }
+
     @PostMapping("/internal/sellStock")
-    public void sellStock(@RequestBody Map<String, Object> data) {
-        service.sellStock(
-            Long.valueOf(data.get("portfolioId").toString()),
-            Long.valueOf(data.get("companyId").toString()),
-            Integer.parseInt(data.get("qty").toString())
-        );
+public ResponseEntity<?> sellStock(@RequestBody Map<String, Object> data) {
+    try {
+        System.out.println("=== SELL REQUEST ===");
+        System.out.println("Data: " + data);
+
+        Long portfolioId = Long.valueOf(data.get("portfolioId").toString());
+        Long companyId = Long.valueOf(data.get("companyId").toString());
+        int qty = Integer.parseInt(data.get("qty").toString());
+
+        service.sellStock(portfolioId, companyId, qty);
+        return ResponseEntity.ok("Stock sold");
+
+    } catch (Exception e) {
+        System.out.println("SELL ERROR: " + e.getMessage());
+        e.printStackTrace();
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
+}
 }

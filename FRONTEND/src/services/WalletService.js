@@ -2,53 +2,31 @@ import api from './axiosInstance';
 
 const WALLET_API_URL = 'http://localhost:8084/wallet';
 
-export const createWallet = async (userId) => {
-  try {
-    const response = await api.post(`${WALLET_API_URL}/create`, { userId });
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
-export const creditWallet = async (userId, amount) => {
-  try {
-    const response = await api.post(`${WALLET_API_URL}/credit`, {
-      userId,
-      amount
-    });
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
-export const debitWallet = async (userId, amount) => {
-  try {
-    const response = await api.post(`${WALLET_API_URL}/debit`, {
-      userId,
-      amount
-    });
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
+// ✅ Get wallet
 export const getWallet = async (userId) => {
-  try {
-    const response = await api.get(`${WALLET_API_URL}/${userId}`);
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
+  const response = await api.get(`${WALLET_API_URL}/${userId}`);
+  return response.data;
 };
 
+// ✅ Create wallet
+export const createWallet = async (userId) => {
+  const response = await api.post(`${WALLET_API_URL}/create`, {
+    userId: String(userId),
+  });
+  return response.data;
+};
+
+// ✅ Add money
+export const addMoneyToWallet = async (userId, amount) => {
+  const response = await api.post(`${WALLET_API_URL}/credit`, {
+    userId: String(userId),
+    amount: amount,
+  });
+  return response.data;
+};
+
+// ✅ THIS WAS MISSING — Get transactions
 export const getTransactions = async (userId) => {
-  try {
-    const response = await api.get(`${WALLET_API_URL}/transactions/${userId}`);
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
+  const response = await api.get(`${WALLET_API_URL}/transactions/${userId}`);
+  return response.data;
 };

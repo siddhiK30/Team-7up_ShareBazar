@@ -9,37 +9,35 @@ import Market from "./pages/Market";
 import Explore from "./pages/Explore";
 import PortfolioPage from "./pages/PortfolioPage";
 import Dashboard from "./pages/Dashboard";
+import WalletPage from "./pages/WalletPage";
 
-// ✅ User Route Guards
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
-
-// ✅ Admin Route Guards
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AdminPublicRoute from "./components/AdminPublicRoute";
 
 function App() {
   const location = useLocation();
 
-  // Hide navbar on these pages (they have their own navbar)
+  // ✅ FIXED: Added /wallet to hide public navbar
   const hideNavbar =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/explore") ||
     location.pathname.startsWith("/portfolio") ||
-    location.pathname.startsWith("/dashboard");
+    location.pathname.startsWith("/dashboard") ||
+    location.pathname.startsWith("/wallet");       // ← ADD THIS
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans selection:bg-green-500/30">
-      {/* Navbar only for public pages */}
       {!hideNavbar && <Navbar />}
 
       <main>
         <Routes>
-          {/* ══════ PUBLIC ROUTES ══════ */}
+          {/* PUBLIC ROUTES */}
           <Route path="/" element={<Home />} />
           <Route path="/market" element={<Market />} />
 
-          {/* ══════ USER AUTH (non-logged-in only) ══════ */}
+          {/* USER AUTH */}
           <Route
             path="/auth"
             element={
@@ -49,7 +47,7 @@ function App() {
             }
           />
 
-          {/* ══════ USER PROTECTED ROUTES ══════ */}
+          {/* ✅ PROTECTED ROUTES */}
           <Route
             path="/explore"
             element={
@@ -58,7 +56,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/portfolio"
             element={
@@ -67,7 +64,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/dashboard"
             element={
@@ -76,8 +72,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+          {/* ✅ FIXED: Wallet is now protected too */}
+          <Route
+            path="/wallet"
+            element={
+              <ProtectedRoute>
+                <WalletPage />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* ══════ ADMIN AUTH (non-logged-in admin only) ══════ */}
+          {/* ADMIN ROUTES */}
           <Route
             path="/admin"
             element={
@@ -86,8 +91,6 @@ function App() {
               </AdminPublicRoute>
             }
           />
-
-          {/* ══════ ADMIN PROTECTED ROUTES ══════ */}
           <Route
             path="/admin/dashboard"
             element={
@@ -97,7 +100,6 @@ function App() {
             }
           />
 
-          {/* ══════ FALLBACK ══════ */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

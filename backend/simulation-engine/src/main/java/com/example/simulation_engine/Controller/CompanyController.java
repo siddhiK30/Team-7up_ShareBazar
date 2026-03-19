@@ -10,14 +10,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.simulation_engine.Entities.Stock;
-import com.example.simulation_engine.Repositories.StockRepository;
+import com.example.simulation_engine.Repositories.StockHistoryRepository;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class CompanyController {
 
     @Autowired
-    private StockRepository stockRepository;
+    private StockHistoryRepository stockRepository;
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
